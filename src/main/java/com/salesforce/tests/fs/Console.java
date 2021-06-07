@@ -13,12 +13,7 @@ import java.util.Scanner;
  */
 public final class Console {
 
-	private static final String QUIT = "quit";
-	private static final String PWD = "pwd";
-	private static final String LS = "ls";
-	private static final String MKDIR = "mkdir";
-	private static final String CD = "cd";
-	private static final String TOUCH = "touch";
+	
 	private static final String PARAMETER_TOKEN = "-";
 
 	private static final String initialPath = System.getProperty("user.home");
@@ -74,7 +69,7 @@ public final class Console {
 					? Utils.getParameter(command)
 					: Constants.EMPTY;
 
-			if (!command.equals(QUIT))
+			if (!command.equals(Constants.QUIT))
 				System.out.print(currentPath + "\t");
 			String input = scanner.nextLine();
 
@@ -86,26 +81,26 @@ public final class Console {
 			String[] arguments = { input, parameter };
 
 			switch (command) {
-			case QUIT: {
+			case Constants.QUIT: {
 				quit();
 				break;
 			}
-			case PWD: {
+			case Constants.PWD: {
 				pwd();
 				break;
 			}
 
-			case LS: {
+			case Constants.LS: {
 				ls();
 				break;
 			}
 
-			case MKDIR: {
+			case Constants.MKDIR: {
 				mkdir(/*args[1]*/"");
 				break;
 			}
 
-			case CD: {
+			case Constants.CD: {
 
 				try {
 					cd(/*args[0]*/"");
@@ -116,7 +111,7 @@ public final class Console {
 				break;
 			}
 
-			case TOUCH: {
+			case Constants.TOUCH: {
 				console.touch();
 				break;
 			}
@@ -131,19 +126,13 @@ public final class Console {
 				System.out.println("Unrecognized command . . . ");
 			}
 
-		} while (!(commands.equals(QUIT)));
+		} while (!(commands.equals(Constants.QUIT)));
 
 		quit();
 	}
 
 	private final void init() {
-		commands = new ArrayList<String>();
-		commands.add(QUIT);
-		commands.add(PWD);
-		commands.add(LS);
-		commands.add(MKDIR);
-		commands.add(CD);
-		commands.add(TOUCH);
+		
 
 		scanner = new Scanner(System.in);
 	}

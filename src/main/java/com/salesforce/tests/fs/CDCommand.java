@@ -8,7 +8,7 @@ public final class CDCommand extends AbstractCommand{
 
 	@Override
 	public void execute() {		
-		
+		System.out.println("TESTED");
 	}
 
 	@Override

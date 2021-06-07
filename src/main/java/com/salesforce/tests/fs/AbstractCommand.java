@@ -1,6 +1,6 @@
 package com.salesforce.tests.fs;
 
-public abstract class AbstractCommand implements IAction{
+public abstract class AbstractCommand implements IActionCommand{
 	
 	protected final String name;
 	protected final String[] parameters;

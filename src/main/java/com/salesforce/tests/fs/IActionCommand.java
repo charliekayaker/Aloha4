@@ -1,6 +1,6 @@
 package com.salesforce.tests.fs;
 
-public interface IAction {
+public interface IActionCommand {
 	
 	public void execute();
 
