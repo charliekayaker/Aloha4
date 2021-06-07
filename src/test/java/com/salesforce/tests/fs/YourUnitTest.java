@@ -15,11 +15,14 @@ public class YourUnitTest {
 		System.out.println(result);
 		
 		CommandBuilder builder = new CommandBuilder(Console.getInstance());
-		builder.setName("cd");
+		builder.setName("quit");
 		builder.setParameters(new String[] {""});
 		try {
-			IActionCommand cdCommand =  builder.build();
-			cdCommand.execute();
+			IActionCommand quitCommand =  builder.build();
+			if(quitCommand instanceof QUITCommand) {
+				System.out.println("INSTANCE OF WORK");
+			}
+			quitCommand.execute();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

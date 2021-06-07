@@ -25,7 +25,7 @@ public class Main {
 		if(console==null) 
 			console = Console.getInstance();
 				
-		console.execute();
+		console.execute(args);
 		
   }	
 	

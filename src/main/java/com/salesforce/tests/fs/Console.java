@@ -28,21 +28,17 @@ public final class Console {
 
 	private Console() {
 		init();
-
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			public void run() {
-				System.out.println("Thank you for see my code . . . Regards. Charlie A Alfonso");
-				try {
-					Thread.sleep(1500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
 		System.out.println("Welcome to the Charlie Console :) . . . \nWrite a command . . .");
 	}
+	
+	private final void init() {
 
+		scanner = new Scanner(System.in);
+		addFinalizeHook();
+	}
+
+
+	//Console is singleton instance
 	public static Console getInstance() {
 
 		if (console == null) {
@@ -52,8 +48,10 @@ public final class Console {
 		return console;
 	}
 
-	public final void execute()  {
+	public final void execute(String ...strings)  {
 		
+		
+		//Acá va a comenzar el while.
 		String commandName = WITHOUTCOMMAND;
 		commandName = scanner.nextLine();
 				
@@ -150,11 +148,6 @@ public final class Console {
 		
 	}
 
-	private final void init() {
-		
-
-		scanner = new Scanner(System.in);
-	}
 
 	private final void quit() {
 
@@ -201,5 +194,19 @@ public final class Console {
 	public void finalize() {
 		scanner.close();
 	}
+	
+	private final void addFinalizeHook() {
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				System.out.println("Thank you for see my code . . . Regards. Charlie A Alfonso");
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
 
 }
