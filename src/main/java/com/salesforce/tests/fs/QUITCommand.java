@@ -13,7 +13,7 @@ public class QUITCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void resfeshConsoleState() {
+	protected void refreshConsoleState() {
 		
 		
 	}

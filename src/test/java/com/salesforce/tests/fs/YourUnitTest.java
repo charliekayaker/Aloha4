@@ -10,7 +10,7 @@ public class YourUnitTest {
 	@Test
 	public void testGetParameter() {
 		
-		String result = Utils.getParameter("HOLA -ALGO");
+	/*	String result = Utils.getParameter("HOLA -ALGO");
 		
 		System.out.println(result);
 		
@@ -26,7 +26,9 @@ public class YourUnitTest {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		
+		Main.main(new String[] {"pwd"});
 	
 	}
 

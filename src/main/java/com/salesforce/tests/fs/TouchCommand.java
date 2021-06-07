@@ -14,7 +14,7 @@ public class TouchCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void resfeshConsoleState() {
+	protected void refreshConsoleState() {
 		
 		
 	}
