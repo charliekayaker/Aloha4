@@ -52,35 +52,53 @@ public final class Console {
 		return console;
 	}
 
-	public final void execute() {
+	public final void execute()  {
 		
-		String command = WITHOUTCOMMAND;
-		command = scanner.nextLine();
+		String commandName = WITHOUTCOMMAND;
+		commandName = scanner.nextLine();
 				
+		String parameter = !commandName.equals(WITHOUTCOMMAND) && commandName.contains(PARAMETER_TOKEN)
+				? Utils.getParameter(commandName)
+				: Constants.EMPTY;
 		
+		if(!parameter.equals(Constants.EMPTY)) 
+			commandName = commandName.substring(0, commandName.indexOf(PARAMETER_TOKEN)-1);
+		
+		CommandBuilder builder = new CommandBuilder(this);
+		
+		builder.setName(commandName);		
+		builder.setParameters(new String[] {parameter});
+		
+		IActionCommand command = null;
+		try {
+			command = builder.build();
+		} catch (Exception e1) {			
+			if(e1 instanceof ClassNotFoundException)
+				System.out.println("Unrecognized command");
+			else
+				e1.printStackTrace();			
+		}
+		command.execute();
+		
+		//ESTO DE ABAJO SE VA A SACAR
 		do {
 
 			if (currentPath.equals(Constants.EMPTY)) {
 				currentPath = initialPath;
-			}
+			} //ESTO LO VAMOS A HACER UN MÉTODO QUE IMPLEMENTA CADA OBJETO COMMANDO POR ESO LE PASAMOS LA CONSOLA			
+
+			if (!commandName.equals(Constants.QUIT))
+				System.out.print(currentPath + "\t"); //ESTO TAMBIÉN
 			
-
-			String parameter = !command.equals(WITHOUTCOMMAND) && command.contains(PARAMETER_TOKEN)
-					? Utils.getParameter(command)
-					: Constants.EMPTY;
-
-			if (!command.equals(Constants.QUIT))
-				System.out.print(currentPath + "\t");
-			String input = scanner.nextLine();
-
-			if (input.contains(PARAMETER_TOKEN)) {
+			
+			/*if (input.contains(PARAMETER_TOKEN)) {
 				parameter = Utils.getParameter(input);
 				input = input.substring(0, input.indexOf(PARAMETER_TOKEN));
-			}
+			}*/
 
-			String[] arguments = { input, parameter };
+			//// SI LLEGA A DAR CLASS NOT FOUND EXCEPTION imprimir "Unrecognized command"
 
-			switch (command) {
+			switch (commandName) {
 			case Constants.QUIT: {
 				quit();
 				break;
@@ -129,6 +147,7 @@ public final class Console {
 		} while (!(commands.equals(Constants.QUIT)));
 
 		quit();
+		
 	}
 
 	private final void init() {

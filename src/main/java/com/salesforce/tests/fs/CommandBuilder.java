@@ -37,7 +37,7 @@ public class CommandBuilder {
 		Class[] pTypesCtor = {String.class, String[].class, Console.class};
 		
 		Object[] pValuesCtor = {name, parameters, console};
-		Constructor ctor = clazz.getConstructor(pTypesCtor);
+		Constructor<AbstractCommand> ctor = clazz.getConstructor(pTypesCtor);
 		
 		Object obj = ctor.newInstance(pValuesCtor);
 		
