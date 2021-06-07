@@ -1,9 +1,5 @@
 package com.salesforce.tests.fs;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -13,12 +9,9 @@ import java.util.Scanner;
  */
 public final class Console {
 
-	
 	private static final String PARAMETER_TOKEN = "-";
 
 	private static final String initialPath = System.getProperty("user.home");
-
-	private static final String WITHOUTCOMMAND = "withoutcommand";
 
 	private String currentPath = "";
 	private static Console console = null;
@@ -28,17 +21,17 @@ public final class Console {
 
 	private Console() {
 		init();
-		System.out.println("Welcome to the Charlie Console :) . . . \nWrite a command . . .");
+
+		System.out.println("Welcome to the Modern Console . . . ");
 	}
-	
+
 	private final void init() {
-		currentPath = initialPath;	
+		currentPath = initialPath;
 		scanner = new Scanner(System.in);
 		addFinalizeHook();
 	}
 
-
-	//Console is singleton instance
+	// Console is singleton instance
 	public static Console getInstance() {
 
 		if (console == null) {
@@ -47,53 +40,55 @@ public final class Console {
 		}
 		return console;
 	}
-	
-	
 
-	public final void execute(String ...strings)  {		
-				
-		commandName = WITHOUTCOMMAND;
-		commandName = strings[0];
-				
-		String parameter = !commandName.equals(WITHOUTCOMMAND) && commandName.contains(PARAMETER_TOKEN)
-				? Utils.getParameter(commandName)
-				: Constants.EMPTY;
-		
-		if(!parameter.equals(Constants.EMPTY)) 
-			commandName = commandName.substring(0, commandName.indexOf(PARAMETER_TOKEN)-1);
-		
-		CommandBuilder builder = new CommandBuilder(this);
-		
-		builder.setName(commandName);		
-		builder.setParameters(new String[] {parameter});
-		
-		IActionCommand command = null;
+	public final void execute(String[] args) {
 		try {
+			   if(args.length > 0) 
+				   commandName = args[0];
+			   else
+				   throw new ClassNotFoundException();
+			
+			String parameter = commandName.contains(PARAMETER_TOKEN)
+					? Utils.getParameter(commandName)
+					: Constants.EMPTY;
+
+			if (!parameter.equals(Constants.EMPTY))
+				commandName = commandName.substring(0, commandName.indexOf(PARAMETER_TOKEN) - 1);
+
+			CommandBuilder builder = new CommandBuilder(this);
+
+			builder.setName(commandName);
+			builder.setParameters(new String[] { parameter });
+			System.out.println("HOLA");
+			IActionCommand command = null;
+
 			command = builder.build();
-		} catch (Exception e1) {			
-			if(e1 instanceof ClassNotFoundException)
+			command.execute();
+		} catch (Exception e1) {
+			if (e1 instanceof ClassNotFoundException)
 				System.out.println("Unrecognized command");
 			else
-				e1.printStackTrace();			
+				e1.printStackTrace();
+		} finally {
+
+			commandName = scanner.nextLine();
+
+			this.execute(new String[] { commandName });
 		}
-		command.execute();
-		
-		commandName = scanner.nextLine();
-		
-		this.execute(new String[] {commandName});
 	}
-
-
 
 	@Override
 	public void finalize() {
 		scanner.close();
 	}
-	
+
 	private final void addFinalizeHook() {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
-				System.out.println("Thank you for see my code . . . Regards. Charlie A Alfonso");
+				if (scanner != null)
+					scanner.close();
+
+				System.out.println("Thank you for see my program . . . Regards. \nCharlie A Alfonso");
 				try {
 					Thread.sleep(1500);
 				} catch (InterruptedException e) {
@@ -110,6 +105,5 @@ public final class Console {
 	public void setCurrentPath(String currentPath) {
 		this.currentPath = currentPath;
 	}
-
 
 }

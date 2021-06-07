@@ -21,9 +21,7 @@ public class Main {
 
 	public static void main(String[] args) {
 	
-		
-		if(console==null) 
-			console = Console.getInstance();
+		console = Console.getInstance();
 				
 		console.execute(args);
 		
