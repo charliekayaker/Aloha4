@@ -1,5 +1,6 @@
 package com.salesforce.tests.fs;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -11,7 +12,7 @@ public final class Console {
 
 	private static final String PARAMETER_TOKEN = "-";
 
-	private static final String initialPath = System.getProperty("user.home");
+	private static final String initialPath = "root";// System.getProperty("user.home");
 
 	private String currentPath = "";
 	private static Console console = null;
@@ -22,7 +23,7 @@ public final class Console {
 	private Console() {
 		init();
 
-		System.out.println("Welcome to the Modern Console . . . ");
+		// System.out.println("Welcome to the Console . . . ");
 	}
 
 	private final void init() {
@@ -41,40 +42,58 @@ public final class Console {
 		return console;
 	}
 
+	private IActionCommand command = null;
+	private String parameter = "";
+
 	public final void execute(String[] args) {
+
+		commandName = getLine();
+		if (commandName.toLowerCase().equals(Constants.QUIT)) {				
+			System.exit(0);
+			return;
+		}
+				
 		try {
-			   if(args.length > 0) 
-				   commandName = args[0];
-			   else
-				   throw new ClassNotFoundException();
-			
-			String parameter = commandName.contains(PARAMETER_TOKEN)
-					? Utils.getParameter(commandName)
+
+			 parameter = commandName.contains(PARAMETER_TOKEN) ? Utils.getParameter(commandName)
 					: Constants.EMPTY;
 
 			if (!parameter.equals(Constants.EMPTY))
 				commandName = commandName.substring(0, commandName.indexOf(PARAMETER_TOKEN) - 1);
 
 			CommandBuilder builder = new CommandBuilder(this);
-
+			
 			builder.setName(commandName);
 			builder.setParameters(new String[] { parameter });
-			System.out.println("HOLA");
-			IActionCommand command = null;
 
 			command = builder.build();
 			command.execute();
+
+			this.execute(new String[0]);
+
 		} catch (Exception e1) {
 			if (e1 instanceof ClassNotFoundException)
 				System.out.println("Unrecognized command");
+			else if(e1.getMessage().equals("IncompleteArguments")) {
+			    e1.printStackTrace();
+			}
 			else
 				e1.printStackTrace();
-		} finally {
-
-			commandName = scanner.nextLine();
-
-			this.execute(new String[] { commandName });
 		}
+
+	}
+
+	private String getLine() {
+		String result = "";
+
+		try {
+			result = scanner.nextLine();
+			
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -87,8 +106,7 @@ public final class Console {
 			public void run() {
 				if (scanner != null)
 					scanner.close();
-
-				System.out.println("Thank you for see my program . . . Regards. \nCharlie A Alfonso");
+				  System.out.println("Finalizando\n\n\n");
 				try {
 					Thread.sleep(1500);
 				} catch (InterruptedException e) {

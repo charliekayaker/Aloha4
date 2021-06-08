@@ -12,8 +12,8 @@ public class PWDCommand extends AbstractCommand {
 	@Override
 	public void execute() {
 		
-		String directoryName = file.getAbsoluteFile().toString();
-		System.out.println(directoryName);
+		String directoryName = file.getName().toString();
+		System.out.println("/"+directoryName);
 		
 	}
 

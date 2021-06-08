@@ -10,5 +10,6 @@ public class Constants {
 	public static final String MKDIR = "mkdir";
 	public static final String CD = "cd";
 	public static final String TOUCH = "touch";
+	public static final String DIRSEPARATOR = "\\";
 
 }

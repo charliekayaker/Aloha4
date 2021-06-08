@@ -9,12 +9,12 @@ public class CommandBuilder {
 	private Console console = null;	
 	private final static String COMMAND = "Command";
 	
-	public CommandBuilder(Console console) {
+	public CommandBuilder(Console console) {		
 		this.console = console;
 	}
 	
 	public CommandBuilder setName(String name) {
-		this.name = name;
+		this.name = name;		
 		return this;
 	} 
 	
@@ -31,7 +31,7 @@ public class CommandBuilder {
 		
 		IActionCommand command = null;
 		
-		String sClass = this.getClass().getCanonicalName().replace(this.getClass().getSimpleName(), name.toUpperCase()+COMMAND);
+		String sClass = this.getClass().getCanonicalName().replace(this.getClass().getSimpleName(), name.toUpperCase().trim()+COMMAND);
 		Class clazz = Class.forName(sClass);
 		
 		Class[] pTypesCtor = {String.class, String[].class, Console.class};

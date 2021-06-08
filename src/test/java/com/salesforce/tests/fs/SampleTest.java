@@ -14,6 +14,6 @@ public class SampleTest extends BaseTest {
         String[] expectedResults = {
                 "/root\n"
         };
-        runTest(expectedResults, "pwd", "quit");
+        runTest(expectedResults, "pwd", "quit"); //El quit después de muchos comandos sino pincha.
     }
 }

@@ -1,7 +1,6 @@
 package com.salesforce.tests.fs;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
@@ -21,8 +20,11 @@ public class BaseTest {
 
     protected void runTest(String[] expectedOutput, String... input) {
         systemInMock.provideLines(input);
+        
         Main.main(new String[0]);
+     
         Assert.assertEquals(String.join("", expectedOutput),
                 systemOutRule.getLogWithNormalizedLineSeparator());
+       return;
     }
 }

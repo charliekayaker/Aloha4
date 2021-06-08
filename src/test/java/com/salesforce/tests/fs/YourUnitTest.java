@@ -1,7 +1,5 @@
 package com.salesforce.tests.fs;
 
-import java.io.File;
-
 import org.junit.Test;
 
 /**
@@ -30,10 +28,9 @@ public class YourUnitTest {
 			e.printStackTrace();
 		}*/
 		
-		//Main.main(new String[] {"cd -root"});
+		Main.main(new String[] {"quit"});
 		
-		File file = new File("root");
-		System.out.println(file.getAbsolutePath());
+		
 	
 	}
 
